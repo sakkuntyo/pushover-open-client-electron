@@ -110,96 +110,9 @@ npm run make
 npm run package
 ```
 
-## package.json で重要な項目
-
-Windows 向け配布では `author` が必要です。
-
-例:
-
-```json
-{
-  "name": "pushover-open-client-electron",
-  "productName": "Pushover Open Client",
-  "version": "0.1.0",
-  "description": "Unofficial Pushover Open Client for Windows",
-  "author": "Daisuke Sasaki",
-  "license": "MIT"
-}
-```
-
-## 実装メモ
-
-### main.js
-
-アプリ全体の制御を担当します。
-
-- Electron 起動
-- Tray 作成
-- 設定画面表示
-- IPC 登録
-- WebSocket 接続開始
-- 自動同期
-- 通知表示
-
-### preload.js
-
-renderer から main へ IPC を安全に渡すためのブリッジです。
-
-### settings.html / settings.js
-
-設定 UI です。
-
-- 保存済み設定の読込
-- Pushover ログイン
-- device 登録
-- 保存
-
-### store.js
-
-設定ファイルの読み書きを担当します。
-
-### pushover.js
-
-Pushover API との通信を担当します。
-
-- `login()`
-- `registerDevice()`
-- `fetchMessages()`
-- `deleteUpTo()`
-- `connectRealtime()`
-
-## 既知の注意点
-
-### 64-bit message id
-
-Pushover の message id は大きいため、削除時の最大 id 判定には `Number()` を使わず、`id_str` と `BigInt` を使います。
-
-例:
-
-```js
-const highestIdStr = messages.reduce((max, msg) => {
-  const current = BigInt(msg.id_str || String(msg.id));
-  return current > max ? current : max;
-}, 0n).toString();
-```
-
-### パッケージ後のファイル書き込み
-
-`__dirname` 配下、特に `app.asar` の中へログや JSON を書こうとすると失敗します。  
-デバッグファイルやログは必ず `app.getPath('userData')` を使います。
-
 ## 自動起動
 
 Windows の `shell:startup` を使ってショートカットを置く想定です。
-
-## 今後の改善候補
-
-- 設定保存後の自動再接続
-- ログローテーション
-- 優先度 2 の emergency message 対応
-- 通知クリック時の URL オープン
-- UI の見た目改善
-- コード署名
 
 ## 免責
 
