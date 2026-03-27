@@ -1,0 +1,29 @@
+{
+  "name": "pushover-open-client-electron",
+  "version": "0.1.0",
+  "description": "Tray-based Pushover Open Client for Electron",
+  "main": "main.js",
+  "author": "Daisuke Sasaki",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^7.11.1",
+    "@electron-forge/maker-deb": "^7.11.1",
+    "@electron-forge/maker-rpm": "^7.11.1",
+    "@electron-forge/maker-squirrel": "^7.11.1",
+    "@electron-forge/maker-zip": "^7.11.1",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.11.1",
+    "@electron-forge/plugin-fuses": "^7.11.1",
+    "@electron/fuses": "^1.8.0",
+    "electron": "^37.2.0"
+  },
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.1",
+    "ws": "^8.20.0"
+  }
+}
